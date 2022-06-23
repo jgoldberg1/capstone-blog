@@ -52,7 +52,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Jenna's Capstone Blog
+          Welcome to Jenna&#39;s Capstone Blog
         </h1>
 
         <div className={styles.directory}>
@@ -64,7 +64,7 @@ const Home: NextPage = () => {
         </div>
 
         {filteredPosts.slice(first, first+10).map(singlePost => (
-          <Post
+          <Post key={singlePost.toString()}
             postDate={singlePost.postDate}   
             title={singlePost.title}
             post={singlePost.post}
