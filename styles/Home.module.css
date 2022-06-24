@@ -19,6 +19,8 @@
   align-items: center;
   width: 75%;
   padding: 30px;
+  padding-left: 50px;
+  padding-right: 50 px;
   margin-top: 70px;
   border-radius: 15px; 
   background-color: rgb(185, 199, 212);
@@ -121,6 +123,11 @@
   white-space: nowrap;
   will-change: box-shadow,transform;
   font-size: 18px;
+}
+
+.postText {
+  margin-right: auto;
+  justify-content: right;
 }
 
 .navButton:focus {
