@@ -11,8 +11,10 @@ import { allPosts, PostData } from '../postData'
 
 const Home: NextPage = () => {
   const [currentTag, setTag] = useState<any>(null);
-  const [first, setFirst] = useState<any>(0);
-  const [filteredPosts, setFilteredPosts] = useState<PostData[]>(allPosts)
+  const [first, setFirst] = useState<number>(0);
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [filteredPosts, setFilteredPosts] = useState<PostData[]>(allPosts);
+  const [maxPages, setMaxPages] = useState<number>(Math.floor((allPosts.length/10)+1));
 
   let tagsArr:string[] = [];
   for (let i = 0; i < allPosts.length; i++) {
@@ -21,7 +23,7 @@ const Home: NextPage = () => {
   let uniqueTagsSet = new Set(tagsArr);
   let uniqueTags = Array.from(uniqueTagsSet);
 
-
+  //Controls page navigation.
   function updateFirst(direction:string) {
     if ((direction == "right" && first+10 > filteredPosts.length) || (direction == "left" && first-10 < 0)) {
       setFirst(first);
@@ -33,16 +35,22 @@ const Home: NextPage = () => {
     }
   }
 
+  //updates filteredPosts state based on currentTag, when currentTag changes. updates maxPages according to the new length of filteredPosts
   useEffect(() => {
     if (currentTag !== null) {
       setFilteredPosts(allPosts.filter(singlePost => singlePost.tags.some(tag => tag === currentTag)));
+      setMaxPages(Math.floor((filteredPosts.length/10)+1))
     } else {
       setFilteredPosts(allPosts);
+      setMaxPages(Math.floor((allPosts.length/10)+1))
     } 
   }, [currentTag]);
 
+  //scrolls back to top of page when page changes. Updates pageNum
   useEffect(() => {
     window.scrollTo(0,0)
+    console.log(first)
+    setPageNum(first == 0 ? 1 : (first/10)+1);
   }, [first])
 
   return (
@@ -63,17 +71,18 @@ const Home: NextPage = () => {
               setTag={setTag}/> )}
         </div>
 
-        {filteredPosts.slice(first, first+10).map(singlePost => (
-          <Post key={singlePost.toString()}
+        {filteredPosts.slice(first, first+10).map((singlePost, index) => (
+          <Post key={index}
             postDate={singlePost.postDate}   
             title={singlePost.title}
             post={singlePost.post}
             tags={singlePost.tags}
             currentTag={currentTag} />
         ))}
-        
+
         <div className={styles.navButtonBox}>
           <button className={styles.navButton} onClick={() => updateFirst("left")}>Back</button>
+          <div>Page {pageNum}/{maxPages}</div>
           <button className={styles.navButton} onClick={() => updateFirst("right")}>Next</button>
         </div>
 

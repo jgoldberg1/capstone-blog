@@ -47,7 +47,7 @@ export const allPosts:PostData[] = [
       postDate:"6/27/22", 
       title:"seventh title", 
       post: "Convallis aenean et tortor at risus viverra. Netus et malesuada fames ac turpis. Sed pulvinar proin gravida hendrerit lectus a. \n Imperdiet nulla malesuada pellentesque elit eget gravida cum sociis. Et malesuada fames ac turpis egestas. Quis enim lobortis scelerisque fermentum dui. Dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. Tincidunt id aliquet risus feugiat in ante metus. Ut pharetra sit amet aliquam id diam maecenas ultricies. Fames ac turpis egestas sed tempus. Etiam sit amet nisl purus in mollis nunc. Commodo sed egestas egestas fringilla.", 
-      tags:["tag the third"]
+      tags:["tag the third", "what if there are a bunch of tags", "and they are all really quite long", "how does that affect the way that tags are displayed on Jenna's capstone blog?"]
     },
     {
       postDate:"6/27/22", 
@@ -86,3 +86,11 @@ export const allPosts:PostData[] = [
       tags:["tag the third"]
     }
   ];
+
+  //Prepends # to tags
+  for (let j = 0; j < allPosts.length; j++) {
+    for (let i = 0; i < allPosts[j].tags.length; i++) {
+      let withTag =  "#".concat(allPosts[j].tags[i]);
+      allPosts[j].tags[i] = withTag;
+    }
+  }
